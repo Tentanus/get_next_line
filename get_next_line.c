@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 20:04:37 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/04/29 21:22:22 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/04/30 20:41:58 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*walk_line(int fd, char *buf, char *line)
 {
-	if (buf)
+	if (*buf)
 		line = buf_clean(buf, line);
 	if (!line || check_char(line, '\n'))
 		return (line);
@@ -24,13 +24,14 @@ char	*walk_line(int fd, char *buf, char *line)
 		if (!line)
 			return (NULL);
 	}
+	line = buf_split_2_line(buf, line, check_char(buf, '\n'));
+	buf_update(buf);
 	return (line);
-//	buf_split_2_line(buf, line, check_char(buf, '\n'));
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buff[BUFFER_SIZE];
+	static char	buff[BUFFER_SIZE];
 	char		*line;
 
 	if (fd < 0 || fd > OPEN_MAX || read(fd, buff, 0) == -1)
@@ -39,8 +40,6 @@ char	*get_next_line(int fd)
 	if (!line)
 		return (NULL);
 	line = walk_line(fd, buff, line);
-
-	fd = 0;
 	return (line);
 }
 

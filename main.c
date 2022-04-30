@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/18 15:46:33 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/04/29 21:22:15 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/04/30 19:09:32 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int main(void)
 //	int		fd4 = open(fn4, O_RDONLY);
 //	int		fd5 = open(fn5, O_RDONLY);
 
-	printf("%d", OPEN_MAX);
 	while(i)
 	{
 		char	*next_line = get_next_line(fd3);

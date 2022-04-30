@@ -6,12 +6,12 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 18:58:05 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/04/29 21:22:17 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/04/30 19:09:34 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GENELI_H
-# define GENELI_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # include <stdio.h>
 
@@ -27,9 +27,11 @@
 
 //Prototypes
 
-int		check_char(char *buf, char c);
+size_t	check_char(char *buf, char c);
 char	*buf_2_line(char *buf, char *line);
 char	*buf_clean(char *buf, char *line);
 char	*get_next_line(int fd);
+char	*buf_split_2_line(char *buf, char *line, size_t nl_len);
+void	buf_update(char *buf);
 
 #endif
