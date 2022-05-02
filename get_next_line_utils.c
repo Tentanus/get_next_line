@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 22:43:21 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/02 22:38:07 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/03 01:04:04 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_char(char *buf, char c)
 	}
 	if (buf[i] == c)
 		return (i);
-	return (0);
+	return (i);
 }
 
 char	*buf_2_line(char *buf, char *line)
@@ -49,7 +49,7 @@ char	*buf_2_line(char *buf, char *line)
 	if (!tmp)
 		return (NULL);
 	tmp[(line_len + buf_len)] = '\0';
-	buf_len--;i
+	buf_len--;
 	while (buf_len >= 0)
 	{
 		tmp[line_len + buf_len] = buf[buf_len];
@@ -66,9 +66,9 @@ char	*buf_2_line(char *buf, char *line)
 
 void	buf_update(char *buf)
 {
-	size_t	i;
-	size_t	j;
-	size_t	k;
+	int	i;
+	int	j;
+	int	k;
 
 	i = check_char(buf, '\n') + 1;
 	j = check_char(buf, '\0');

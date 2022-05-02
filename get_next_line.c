@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 20:04:37 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/02 22:44:41 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/03 01:01:18 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*walk_line(int fd, char *buf, char *line)
 		line = buf_clean(buf, line);
 	if (!line || check_char(line, '\n'))
 		return (line);
-	while ((read(fd, buf, BUFFER_SIZE) > 0) && !(check_char(buf, '\n')))
+	while ((read(fd, buf, BUFFER_SIZE) > 0) && (check_char(buf, '\n') == 
+				BUFFER_SIZE))
 	{
 		line = buf_2_line(buf, line);
 		if (!line)
