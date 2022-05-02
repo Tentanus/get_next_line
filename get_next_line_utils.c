@@ -6,15 +6,20 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 22:43:21 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/04/30 20:41:54 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/02 22:38:07 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	check_char(char *buf, char c)
+// buf_clean: 
+// Buf clean should have a check if the current fd is at the last line, 
+// we can use read in this case since it won't give new output into buffer,
+// 
+
+int	check_char(char *buf, char c)
 {
-	size_t	i;
+	int	i;
 
 	if (!buf)
 		return (0);
@@ -32,8 +37,8 @@ size_t	check_char(char *buf, char c)
 
 char	*buf_2_line(char *buf, char *line)
 {
-	int	line_len;
-	int	buf_len;
+	int		line_len;
+	int		buf_len;
 	char	*tmp;
 
 	line_len = 0;
@@ -44,7 +49,7 @@ char	*buf_2_line(char *buf, char *line)
 	if (!tmp)
 		return (NULL);
 	tmp[(line_len + buf_len)] = '\0';
-	buf_len--;
+	buf_len--;i
 	while (buf_len >= 0)
 	{
 		tmp[line_len + buf_len] = buf[buf_len];
@@ -58,10 +63,6 @@ char	*buf_2_line(char *buf, char *line)
 	free(line);
 	return (tmp);
 }
-// Not sure if Buf2line will work: might be counting the '\0' char double and
-// thus allocate too much memory.
-//
-// the line_len-- before the writing starts might need to be buf_len. LINE: 47
 
 void	buf_update(char *buf)
 {
@@ -69,7 +70,7 @@ void	buf_update(char *buf)
 	size_t	j;
 	size_t	k;
 
-	i = check_char(buf, '\n');
+	i = check_char(buf, '\n') + 1;
 	j = check_char(buf, '\0');
 	k = 0;
 	while (k <= (j - i) && i)
@@ -80,13 +81,13 @@ void	buf_update(char *buf)
 	return;
 }
 
-char	*buf_split_2_line(char *buf, char *line, size_t nl_len)
+char	*buf_split_2_line(char *buf, char *line, int nl_len)
 {
 	int		line_len;
 	char	*tmp;
 
 	line_len = 0;
-	while (line[line_len])
+	while (line[line_len + 1])
 		line_len++;
 	if (!nl_len)
 		nl_len = check_char(buf, '\0');
@@ -95,7 +96,7 @@ char	*buf_split_2_line(char *buf, char *line, size_t nl_len)
 		return (NULL);
 	while (nl_len >= 0)
 	{
-		tmp[line_len + nl_len] = buf[nl_len];
+		tmp[line_len + nl_len + 1] = buf[nl_len];
 		nl_len--;
 	}
 	while (line_len >= 0)
@@ -109,8 +110,8 @@ char	*buf_split_2_line(char *buf, char *line, size_t nl_len)
 
 char	*buf_clean(char *buf, char *line)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = check_char(buf, '\n');
 	j = 0;
@@ -128,15 +129,10 @@ char	*buf_clean(char *buf, char *line)
 		while (j <= i)
 		{
 			line[j] = buf[j];
-			buf[j] = buf[i + j + 1];
 			j++;
 		}
+		buf_update(buf);
 	}
 	return (line);
 }
 
-// Edge case: when there is a long buffer -> the while loop won't propperly
-// update the entire buffer
-// e.g.
-// buf: 		 "ere\nAnd later that\0"
-// updated buf:	 "And  And later that\0"

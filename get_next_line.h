@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 18:58:05 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/04/30 19:09:34 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/01 18:41:57 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 
 //Prototypes
 
-size_t	check_char(char *buf, char c);
+int		check_char(char *buf, char c);
 char	*buf_2_line(char *buf, char *line);
 char	*buf_clean(char *buf, char *line);
 char	*get_next_line(int fd);
-char	*buf_split_2_line(char *buf, char *line, size_t nl_len);
+char	*buf_split_2_line(char *buf, char *line, int nl_len);
 void	buf_update(char *buf);
 
 #endif

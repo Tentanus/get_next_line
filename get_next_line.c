@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 20:04:37 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/04/30 20:41:58 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/02 22:44:41 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,46 +43,3 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*
-
-Open return values:
-
-
-
-																				
-Read Return values:
-non-negative
-Upon succesful completion, indicating the total bytes actually read.
-
--1
-if it fails
-
-
-
-First Try: Walk Line:
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (!(ft_strcheck(buf, '\n')))
-		buf2line(buf, line);
-	while (!(ft_strcheck(buf, '\n')) && read(fd, buf, BUFFER_SIZE))
-		buf2line(buf, line);
-	if (ft_strcheck(buf, '\n'))
-	{
-		buf2line(buf, line);
-		while (buf[i] != '\n')
-			i++;
-		while (buf[i])
-		{
-			buf[j] = buf [i];
-			i++;
-			j++;
-		}
-		buf[j] = '\0';
-	}
-	return (line);
-}
-*/
