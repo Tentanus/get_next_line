@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 18:58:05 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/01 18:41:57 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/05 18:22:47 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,41 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 20
+#  define BUFFER_SIZE 1
 # endif
 
-//Prototypes
-
+//FUNCTIONS
 int		check_char(char *buf, char c);
-char	*buf_2_line(char *buf, char *line);
-char	*buf_clean(char *buf, char *line);
 char	*get_next_line(int fd);
+char	*buf_clean(char *buf, char *line);
+char	*buf_2_line(char *buf, char *line);
 char	*buf_split_2_line(char *buf, char *line, int nl_len);
 void	buf_update(char *buf);
+void	*free_func(char *line);
+void	*scalloc(size_t nitems, size_t size);
 
 #endif
+
+/*
+ * To do list in get_next_line:
+ *
+ *
+ * Checklist of walking the line:
+ *
+ * -check if buf excists
+ * 		check if contains \n
+ * 			buf split 2 line
+ * 			update buf
+ * 		no
+ * 			buf 2 line
+ * while read 
+ *
+ *
+ */
+
+// read returns the total amount of bites read. meaning
+// read(fd, buf[x], x) (x = 10):
+// will return 10 when in the middle of a file.
+//
+// will return 5 when partially at the end of the file 
+// ex: buf[]= "the end but"

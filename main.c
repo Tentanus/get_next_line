@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/18 15:46:33 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/02 19:31:19 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/05 18:22:53 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main(void)
 //	char	*fn4 = "/Users/mweverli/files/get_next_line/Text_files/top_chars_network.txt";
 //	char	*fn5 = "/Users/mweverli/files/get_next_line/Text_files/EpisodeIV_dialogues.txt";
 
-	int i = 4;
+	int i = 7;
 	int		fd3 = open(fn3, O_RDONLY);
 //	int		fd4 = open(fn4, O_RDONLY);
 //	int		fd5 = open(fn5, O_RDONLY);
@@ -26,8 +26,13 @@ int main(void)
 	while(i)
 	{
 		char	*next_line = get_next_line(fd3);
-		printf("-------========--------\nthe next line:\n|%s|\n\n", next_line);
-		free(next_line);
+		if (*next_line)
+		{
+			printf("-------========--------\nthe next line:\n|%s|\n\n", next_line);
+			free(next_line);
+		}
+		else
+			printf("-------========--------\nThere is no new line.\n");
 		i--;
 	}
 	return (0);
