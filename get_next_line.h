@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 18:58:05 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/05 18:22:47 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/11 19:51:07 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,19 @@
 #  define BUFFER_SIZE 1
 # endif
 
+// Switch around for logic
+
+# if BUFFER_SIZE > 1000
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE 1000
+# endif
+
 //FUNCTIONS
 int		check_char(char *buf, char c);
 char	*get_next_line(int fd);
 char	*buf_clean(char *buf, char *line);
 char	*buf_2_line(char *buf, char *line);
-char	*buf_split_2_line(char *buf, char *line, int nl_len);
+//char	*buf_split_2_line(char *buf, char *line);
 void	buf_update(char *buf);
 void	*free_func(char *line);
 void	*scalloc(size_t nitems, size_t size);
@@ -52,7 +59,7 @@ void	*scalloc(size_t nitems, size_t size);
  * while read 
  *
  *
- */
+
 
 // read returns the total amount of bites read. meaning
 // read(fd, buf[x], x) (x = 10):
@@ -60,3 +67,5 @@ void	*scalloc(size_t nitems, size_t size);
 //
 // will return 5 when partially at the end of the file 
 // ex: buf[]= "the end but"
+// 
+*/
