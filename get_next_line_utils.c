@@ -6,11 +6,34 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 22:43:21 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/11 20:12:21 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/12 15:19:05 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*scalloc(size_t nitems, size_t size)
+{
+	char	*ptr;
+	int		i;
+
+	i = (nitems * size);
+	ptr = malloc(nitems * size);
+	if (!ptr)
+		return (NULL);
+	while (i > 0)
+	{
+		i--;
+		ptr[i] = '\0';
+	}
+	return (ptr);
+}
+
+void	*free_func(char *line)
+{
+	free(line);
+	return (NULL);
+}
 
 int	check_char(char *buf, char c)
 {
@@ -21,7 +44,7 @@ int	check_char(char *buf, char c)
 		return (0);
 	if (c == '\n')
 	{
-		while (i <= BUFFER_SIZE)
+		while (buf[i])
 		{
 			if (buf[i] == '\n')
 				return (i + 1);
@@ -34,32 +57,7 @@ int	check_char(char *buf, char c)
 			i++;
 	return (i);
 }
-/*
-char	*buf_2_line(char *buf, char *line)
-{
-	int		line_len;
-	int		buf_len;
-	char	*tmp;
 
-	line_len = check_char(line, '\0');
-	buf_len = BUFFER_SIZE;
-	tmp = scalloc(sizeof(char), (line_len + buf_len + 1));
-	if (!tmp)
-		return (free_func(line));
-	while (buf_len >= 0)
-	{
-		tmp[line_len + buf_len] = buf[buf_len];
-		buf_len--;
-	}
-	while (line_len >= 0)
-	{
-		line_len--;
-		tmp[line_len] = line[line_len];
-	}
-	free(line);
-	return (tmp);
-}
-*/
 char	*buf_2_line(char *buf, char *line)
 {
 	int		line_len;
@@ -73,12 +71,13 @@ char	*buf_2_line(char *buf, char *line)
 	tmp = scalloc(sizeof(char), (line_len + buf_len + 1));
 	if (!tmp)
 		return (free_func(line));
-	while (buf_len >= 0)
+	tmp[line_len + buf_len] = '\0';
+	while (buf_len > 0)
 	{
 		buf_len--;
 		tmp[line_len + buf_len] = buf[buf_len];
 	}
-	while (line_len >= 0)
+	while (line_len > 0)
 	{
 		line_len--;
 		tmp[line_len] = line[line_len];
@@ -86,9 +85,6 @@ char	*buf_2_line(char *buf, char *line)
 	free(line);
 	return (tmp);
 }
-
-//buf_update:
-//won't see difference between nl_plus 
 
 void	buf_update(char *buf)
 {
@@ -111,19 +107,4 @@ void	buf_update(char *buf)
 	}
 	buf[i] = '\0';
 	return ;
-}
-
-char	*buf_clean(char *buf, char *line)
-{
-	int	nl;
-
-	nl = check_char(buf, '\n');
-	if (nl == 0)
-		line = buf_2_line(buf, line);
-	else
-	{
-		line = buf_2_line(buf, line);
-		buf_update(buf);
-	}
-	return (line);
 }
