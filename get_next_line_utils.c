@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 22:43:21 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/12 15:19:05 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/16 15:44:47 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ void	*scalloc(size_t nitems, size_t size)
 	ptr = malloc(nitems * size);
 	if (!ptr)
 		return (NULL);
-	while (i > 0)
-	{
-		i--;
+	while (i-- > 0)
 		ptr[i] = '\0';
-	}
 	return (ptr);
 }
 
@@ -65,7 +62,7 @@ char	*buf_2_line(char *buf, char *line)
 	char	*tmp;
 
 	buf_len = check_char(buf, '\n');
-	if (!buf_len)
+	if (buf_len == 0)
 		buf_len = check_char(buf, '\0');
 	line_len = check_char(line, '\0');
 	tmp = scalloc(sizeof(char), (line_len + buf_len + 1));
@@ -93,7 +90,7 @@ void	buf_update(char *buf)
 	int	i;
 
 	nl_plus = check_char(buf, '\n');
-	if (!nl_plus)
+	if (nl_plus == 0)
 	{
 		buf[0] = '\0';
 		return ;

@@ -6,16 +6,21 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 20:04:37 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/12 15:19:04 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/05/16 15:56:40 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*walk_line(int fd, char *buf, char *line)
+char	*get_next_line(int fd)
 {
-	int	read_ret;
+	static char	buf[BUFFER_SIZE + 1];
+	char		*line;
+	int			read_ret;
 
+	if (fd < 0 || fd > OPEN_MAX || read(fd, buf, 0) == -1)
+		return (NULL);
+	line = scalloc(sizeof(char), 1);
 	if (*buf)
 		line = buf_2_line(buf, line);
 	while (line && !(check_char(line, '\n')))
@@ -29,21 +34,7 @@ char	*walk_line(int fd, char *buf, char *line)
 			break ;
 	}
 	buf_update(buf);
-	return (line);
-}
-
-char	*get_next_line(int fd)
-{
-	static char	buf[BUFFER_SIZE + 1];
-	char		*line;
-
-	if (fd < 0 || fd > OPEN_MAX || read(fd, buf, 0) == -1)
-		return (NULL);
-	line = scalloc(sizeof(char), 1);
-	if (!line)
-		return (NULL);
-	line = walk_line(fd, buf, line);
-	if (line && !*line)
+	if (read_ret == 0 && *line == '\0')
 		return (free_func(line));
 	return (line);
 }
