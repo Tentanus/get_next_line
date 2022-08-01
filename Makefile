@@ -6,7 +6,7 @@
 #    By: mweverli <mweverli@codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/19 20:19:24 by mweverli      #+#    #+#                  #
-#    Updated: 2022/08/01 21:22:08 by mweverli      ########   odam.nl          #
+#    Updated: 2022/08/01 21:25:08 by mweverli      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ $(OBJ_DIR):
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $^ 
-	@echo "$(GREEN)$(BOLD)FINISHED COMPILING: $(NAME)(RESET)"
+	@echo "$(GREEN)$(BOLD)FINISHED COMPILING: $(NAME)$(RESET)"
 
 test_db: clean
 	@make $(NAME) DB=1
