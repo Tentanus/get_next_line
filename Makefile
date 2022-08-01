@@ -6,43 +6,82 @@
 #    By: mweverli <mweverli@codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/19 20:19:24 by mweverli      #+#    #+#                  #
-#    Updated: 2022/05/02 22:51:11 by mweverli      ########   odam.nl          #
+#    Updated: 2022/08/01 20:30:31 by mweverli      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-#VAR
+#========================================#
+#=========  GENERAL VARIABLES:  =========#
+#========================================#
 
-CC		=	gcc
-CLG		=	clang
-CFL		=	-Wall -Werror -Wextra
-NAME	=	get_next_output
-OBJ_DIR	=	./OBJ
+NAME		:=	get_next_line.a
 
-SRC	=	main.c \
-		get_next_line.c \
-		get_next_line_utils.c
+OBJ_DIR		:=	./OBJ
+SRC_DIR		:=	./src
+INC_DIR		:=	./include
 
-OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+SRC			:=	$(shell ls src/)
+OBJ			:=	$(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
-#COM
-test: $(OBJ)
-	$(CC) $(CFL) -o $(NAME) $^
-	./$(NAME)
+#=============== COLOURS ================#
 
-db_test: $(OBJ)
-	$(CC) $(CFL) -g -o $(NAME) $^
-	lldb ./$(NAME)
+BOLD	:= \033[1m
+RED		:= \033[31;1m
+GREEN	:= \033[32;1m
+RESET	:= \033[0m
 
-$(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(@D)
-	$(CC) $(CFL) -g -c $< -o $@
+#============= COMPILATION ==============#
+
+CC			:=	gcc
+CFL			:=	-Wall -Werror -Wextra
+CFL_DB		:=	-Wall -Werror -Wextra -g -fsanitize=address
+
+HEADER		:=	-I ./include
+
+ifdef DB
+COMPILE		:=	$(CC) $(CFL_DB)
+else
+COMPILE		:=	$(CC) $(CFL)
+endif
+
+#========================================#
+#============== RECIPIES  ===============#
+#========================================#
+
+all: $(NAME)
+
+$(OBJ_DIR):
+	@mkdir -p $@
+
+$(NAME): $(OBJ)
+	@ar rcs $(NAME) $^ 
+	@echo "$(GREEN)$(BOLD)$(NAME) Compiled$(RESET)"
+
+test_db: clean
+	@make $(NAME) DB=1
+
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c | $(OBJ_DIR)
+	@$(COMPILE) -o $@ -c $< $(HEADER)
+	@echo "$(GREEN)COMPILING: $(notdir $<) $(RESET)"
 
 clean:
-	@mkdir -p $(OBJ_DIR)
-	rm -r $(OBJ_DIR)
+	@echo "$(RED)$(BOLD)Cleaning $(NAME)$(RESET)"
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	rm ./$(NAME)
+	@rm -f $(NAME)
 
-re: fclean test
+re: fclean all
 
+#========================================#
+#============ MISCELLANEOUS =============#
+#========================================#
+
+.PHONY: all clean fclean re test_db
+
+.DEFAULT_GOAL := all
+
+FORCE:
+
+test_var: $(FORCE)
+	$(SRC)
