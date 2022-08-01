@@ -6,7 +6,7 @@
 #    By: mweverli <mweverli@codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/19 20:19:24 by mweverli      #+#    #+#                  #
-#    Updated: 2022/08/01 20:30:31 by mweverli      ########   odam.nl          #
+#    Updated: 2022/08/01 21:10:34 by mweverli      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ $(OBJ_DIR):
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $^ 
-	@echo "$(GREEN)$(BOLD)$(NAME) Compiled$(RESET)"
+	@echo "$(GREEN)$(BOLD)Get_Next_Line Compiled$(RESET)"
 
 test_db: clean
 	@make $(NAME) DB=1
@@ -65,7 +65,7 @@ $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(GREEN)COMPILING: $(notdir $<) $(RESET)"
 
 clean:
-	@echo "$(RED)$(BOLD)Cleaning $(NAME)$(RESET)"
+	@echo "$(RED)$(BOLD)Cleaning Get_Next_Line$(RESET)"
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
