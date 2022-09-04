@@ -21,6 +21,10 @@
 #  undef BUFFER_SIZE
 # endif
 
+# ifndef LIMITS_H
+#  define OPEN_MAX 255
+# endif
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
 # endif
