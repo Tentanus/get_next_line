@@ -6,7 +6,7 @@
 /*   By: mweverli <mweverli@codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/19 18:58:05 by mweverli      #+#    #+#                 */
-/*   Updated: 2022/05/16 15:52:15 by mweverli      ########   odam.nl         */
+/*   Updated: 2022/09/06 15:44:53 by mweverli      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #  undef BUFFER_SIZE
 # endif
 
-# ifndef LIMITS_H
+# ifndef OPEN_MAX
 #  define OPEN_MAX 255
 # endif
 
