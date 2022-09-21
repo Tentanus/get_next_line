@@ -32,7 +32,6 @@
 //FUNCTIONS
 char	*get_next_line(int fd);
 void	*scalloc(size_t nitems, size_t size);
-void	*free_func(char *line);
 int		check_char(char *buf, char c);
 char	*buf_2_line(char *buf, char *line);
 void	buf_update(char *buf);

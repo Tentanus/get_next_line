@@ -27,7 +27,7 @@ char	*get_next_line(int fd)
 	{
 		read_ret = read(fd, buf, BUFFER_SIZE);
 		if (read_ret == -1)
-			return (free_func(line));
+			return (free(line), NULL);
 		buf[read_ret] = '\0';
 		line = buf_2_line(buf, line);
 		if (read_ret < BUFFER_SIZE)
@@ -35,6 +35,6 @@ char	*get_next_line(int fd)
 	}
 	buf_update(buf);
 	if (read_ret == 0 && *line == '\0')
-		return (free_func(line));
+		return (free(line), NULL);
 	return (line);
 }

@@ -26,12 +26,6 @@ void	*scalloc(size_t nitems, size_t size)
 	return (ptr);
 }
 
-void	*free_func(char *line)
-{
-	free(line);
-	return (NULL);
-}
-
 int	check_char(char *buf, char c)
 {
 	int	i;
@@ -67,7 +61,7 @@ char	*buf_2_line(char *buf, char *line)
 	line_len = check_char(line, '\0');
 	tmp = scalloc(sizeof(char), (line_len + buf_len + 1));
 	if (!tmp)
-		return (free_func(line));
+		return (free(line), NULL);
 	tmp[line_len + buf_len] = '\0';
 	while (buf_len > 0)
 	{
