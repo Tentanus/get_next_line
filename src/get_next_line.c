@@ -23,15 +23,13 @@ char	*get_next_line(int fd)
 	line = scalloc(sizeof(char), 1);
 	if (*buf)
 		line = buf_2_line(buf, line);
-	while (line && !(check_char(line, '\n')))
+	while (line && !(check_char(line, '\n')) && read_ret < BUFFER_SIZE)
 	{
 		read_ret = read(fd, buf, BUFFER_SIZE);
 		if (read_ret == -1)
 			return (free(line), NULL);
 		buf[read_ret] = '\0';
 		line = buf_2_line(buf, line);
-		if (read_ret < BUFFER_SIZE)
-			break ;
 	}
 	buf_update(buf);
 	if (read_ret == 0 && *line == '\0')
